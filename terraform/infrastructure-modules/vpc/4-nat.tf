@@ -1,0 +1,19 @@
+# Network Address Translation (NAT) Gateway to provide internet access to private subnets
+# Recommend: Manually allocating a static public IP address, might need to whitelist it with clients in the future
+
+resource "aws_eip" "this" {
+    tags = {
+        Name = "${var.env}-nat"
+    }
+}
+
+resource "aws_nat_gateway" "this" {
+    allocation_id = aws_eip.this.id
+    subnet_id = aws_subnet.public[0].id
+    
+    tags = {
+        Name = "${var.env}-nat"
+    }
+
+    depends_on = [ aws_internet_gateway.this ]
+}

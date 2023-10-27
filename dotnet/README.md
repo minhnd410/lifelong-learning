@@ -1,3 +1,7 @@
+## Roadmap
+[Roadmap backend](https://roadmap.sh/backend)
+[Roadmap Dotnet](https://roadmap.sh/aspnet-core)
+
 ## Dotnet Template
 ### Docs
 - [dotnet-new](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new) Creates a new project, configuration file, or solution based on the specified template.

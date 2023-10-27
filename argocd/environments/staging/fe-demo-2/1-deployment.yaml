@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-demo
+  namespace: bar
+  labels:
+    app: fe-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fe-demo
+  template:
+    metadata:
+      labels:
+        app: fe-demo
+    spec:
+      containers:
+      - name: fe-demo
+        image: minhnd410/fe-demo:1.0.2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

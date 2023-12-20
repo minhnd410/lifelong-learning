@@ -17,21 +17,23 @@ public class LocalStorageService : IFileStorageService
         await content.CopyToAsync(fileStream);
     }
 
-    public async Task<Stream> GetFileAsync(string fileName)
+    public Task<Stream> GetFileAsync(string fileName)
     {
         var filePath = Path.Combine(_basePath, fileName);
 
         if (File.Exists(filePath))
-            return File.OpenRead(filePath);
+            return Task.FromResult<Stream>(File.OpenRead(filePath));
 
-        return null!;
+        return Task.FromResult<Stream>(null!);
     }
 
-    public async Task DeleteFileAsync(string fileName)
+    public Task DeleteFileAsync(string fileName)
     {
         var filePath = Path.Combine(_basePath, fileName);
 
         if (File.Exists(filePath))
             File.Delete(filePath);
+        
+        return Task.CompletedTask;
     }
 }

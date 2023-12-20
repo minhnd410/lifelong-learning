@@ -8,8 +8,8 @@ namespace Herond.Common.Authentication;
 
 public class ApiKeyAuthOptions : AuthenticationSchemeOptions
 {
-    public string ApiKeyValue { get; set; }
-    public string ApiKeyName { get; set; }
+    public string ApiKeyValue { get; set; } = null!;
+    public string ApiKeyName { get; set; } = null!;
 }
 
 public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthOptions>
@@ -17,23 +17,22 @@ public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthOptions>
     public ApiKeyAuthHandler(
         IOptionsMonitor<ApiKeyAuthOptions> options,
         ILoggerFactory logger,
-        UrlEncoder encoder,
-        ISystemClock clock)
-        : base(options, logger, encoder, clock)
+        UrlEncoder encoder)
+        : base(options, logger, encoder)
     {
     }
 
-    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         if (Context.Request.Path.Value!.StartsWith("/swagger"))
-            return AuthenticateResult.NoResult();
+            return Task.FromResult(AuthenticateResult.NoResult());
         
         // Retrieve the API key from the query parameters
         var apiKey = Context.Request.Query[Options.ApiKeyName];
 
         // Validate the API key (you can replace "your_hardcoded_key" with your actual key)
         if (!String.Equals(apiKey, Options.ApiKeyValue, StringComparison.CurrentCultureIgnoreCase))
-            return AuthenticateResult.Fail("Invalid API key");
+            return Task.FromResult(AuthenticateResult.Fail("Invalid API key"));
 
         // Create claims (if needed)
         var claims = new[] { new Claim(ClaimTypes.Name, "ApiKeyUser") };
@@ -42,6 +41,6 @@ public class ApiKeyAuthHandler : AuthenticationHandler<ApiKeyAuthOptions>
         var principal = new ClaimsPrincipal(identity);
         var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
-        return AuthenticateResult.Success(ticket);
+        return Task.FromResult(AuthenticateResult.Success(ticket));
     }
 }

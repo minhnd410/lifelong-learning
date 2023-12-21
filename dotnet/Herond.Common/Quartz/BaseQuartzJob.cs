@@ -14,8 +14,8 @@ public abstract class BaseQuartzJob : IJob
         _logger = logger;
     }
 
-    protected abstract Task ExecuteJob(IJobExecutionContext context);
-
+    public ILogger<BaseQuartzJob> Logger => _logger;
+    
     public async Task Execute(IJobExecutionContext context)
     {
         // Execute pre-tasks before the main job logic
@@ -35,6 +35,8 @@ public abstract class BaseQuartzJob : IJob
         // Execute post-tasks after the main job logic
         await ExecutePostTasks(context);
     }
+    
+    protected abstract Task ExecuteJob(IJobExecutionContext context);
 
     private Task ExecutePreTasks(IJobExecutionContext context)
     {

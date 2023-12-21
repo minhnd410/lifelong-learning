@@ -1,8 +1,7 @@
-using System.Text;
 using BenchmarkDotNet.Attributes;
 using Herond.Common.Utils;
 
-namespace Herond.BenchMarks.Benchmarks;
+namespace Herond.BenchMarks;
 
 [MemoryDiagnoser(true)]
 public class ProtobufBenchmark

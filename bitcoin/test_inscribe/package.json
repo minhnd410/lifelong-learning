@@ -1,0 +1,15 @@
+{
+  "name": "new",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@cmdcode/tapscript": "^1.4.4",
+    "bitcoinjs-lib": "^6.1.5",
+    "crypto-browserify": "^3.12.0",
+    "crypto-js": "^4.2.0"
+  },
+  "browser": {
+    "crypto": "crypto-browserify"
+  }
+}

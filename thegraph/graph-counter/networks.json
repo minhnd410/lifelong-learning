@@ -1,0 +1,8 @@
+{
+  "mainnet": {
+    "DemoCounterContract": {
+      "address": "0x939341a62f30cc50c108bdd506608e20cdbe6111",
+      "startBlock": 0
+    }
+  }
+}

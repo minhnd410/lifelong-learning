@@ -1,0 +1,26 @@
+specVersion: 0.0.8
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: DemoCounterContract
+    network: mainnet
+    source:
+      address: "0x939341a62f30cc50c108bdd506608e20cdbe6111"
+      abi: DemoCounterContract
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CountChanged
+      abis:
+        - name: DemoCounterContract
+          file: ./abis/DemoCounterContract.json
+      eventHandlers:
+        - event: CountChanged(uint256)
+          handler: handleCountChanged
+      file: ./src/demo-counter-contract.ts
